@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      let receivedLength = 0
+
+      function log(msg) {
+        document.body.innerHTML += `${msg}<br>`
+      }
+
+      function onDownloadProgress(event) {
+        const partialResponse = event.currentTarget.responseText.substring(receivedLength)
+        receivedLength += partialResponse.length
+        log(partialResponse)
+      }
+
+      axios.get('/partial', { onDownloadProgress }).then((data) => log('Finished'))
+    </script>
+  </body>
+</html>
